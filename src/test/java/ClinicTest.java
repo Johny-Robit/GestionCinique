@@ -1,18 +1,32 @@
 import org.example.dom.Clinic;
+import org.example.dom.WaitingList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.example.dom.AlgoDeTriage;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 public class ClinicTest {
 
+    private WaitingList algo1;
+    private WaitingList algo2;
+
+
     @BeforeEach
-    public void setup () {
-        AlgoDeTriage algo = new AlgoDeTriage();
+    void setup () {
+        algo1 = mock(WaitingList.class);
+        algo2 = mock(WaitingList.class);
     }
 
 
     @Test
-    public void whenClinique_InstanciateWithAlgorithm () {
-        Clinic uneClinique = new Clinic(algo);
+    public void whenClinic_InstanciatedWithTwoValidAlgorithm_ShouldCreateClinic () {
+        Clinic uneClinique = new Clinic(algo1, algo2);
+
+        assertNotNull(uneClinique);
     }
+
+    @Test
+    public void n() {}
+
 }
