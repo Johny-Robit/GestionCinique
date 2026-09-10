@@ -1,48 +1,19 @@
 package org.example.dom;
 
+import org.example.dom.SortAlgorithm;
+
 public class Clinic {
-    WaitingList algoDeTriageRadiologie;
-    WaitingList algoDeTriageDocteur;
+    private SortAlgorithm doctorSort;
+    private SortAlgorithm radiologySort;
 
-    public Clinic(WaitingList algoDeTriageRadiologie, WaitingList algoDeTriageDocteur) {
-
-        this.algoDeTriageRadiologie = algoDeTriageRadiologie;
-        this.algoDeTriageDocteur = algoDeTriageDocteur;
+    public Clinic(SortAlgorithm doctorSort, SortAlgorithm radiologySort) {
+        this.doctorSort = doctorSort;
+        this.radiologySort = radiologySort;
     }
 
-    public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
-        switch (visibleSymptom) {
+    public void registerPatient(String name){
+        doctorSort.addPatient(name);
 
-            case BROKEN_BONE, SPRAIN:
-
-                assignRadiologistPatientQueue();
-                break;
-
-            default:
-                assignDoctorPatientQueue();
-                break;
-
-        }
     }
-
-    public void treatRadiologistPatient() {
-        // TODO
-    }
-
-    public void treatDoctorPatient() {
-        // TODO
-    }
-
-    public void assignDoctorPatientQueue() {
-        // TODO
-    }
-
-    public void assignRadiologistPatientQueue() {
-        // TODO
-    }
-
-
-
-    // D'autres méthodes peuvent être nécessaires
 
 }

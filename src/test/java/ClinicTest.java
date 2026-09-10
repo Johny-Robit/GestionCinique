@@ -1,31 +1,34 @@
 import org.example.dom.Clinic;
-import org.example.dom.WaitingList;
+import org.example.dom.SortAlgorithm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class ClinicTest {
 
-    private WaitingList algo1;
-    private WaitingList algo2;
+    private SortAlgorithm FIRST_SORT_ALGORITHM;
+    private SortAlgorithm SECOND_SORT_ALGORITHM;
+
+    private String PATIENT_NAME_1 = "John Doe";
 
 
     @BeforeEach
     void setup () {
-        algo1 = mock(WaitingList.class);
-        algo2 = mock(WaitingList.class);
+        FIRST_SORT_ALGORITHM = mock(SortAlgorithm.class);
+        SECOND_SORT_ALGORITHM = mock(SortAlgorithm.class);
     }
 
     @Test
-    public void whenClinic_InstanciatedWithTwoValidAlgorithm_ShouldCreateClinic () {
-        Clinic uneClinique = new Clinic(algo1, algo2);
+    public void whenPatientArrives_thenPatientIsAddedToDoctorQueue () {
+        Clinic clinic = new Clinic(FIRST_SORT_ALGORITHM, SECOND_SORT_ALGORITHM);
 
-        assertNotNull(uneClinique);
+        clinic.registerPatient(PATIENT_NAME_1);
+
+        verify(FIRST_SORT_ALGORITHM).addPatient(PATIENT_NAME_1);
     }
 
-    @Test
-    public void n() {}
 
 }

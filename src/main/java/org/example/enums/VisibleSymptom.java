@@ -1,4 +1,4 @@
-package org.example.dom;
+package org.example.enums;
 
 public enum VisibleSymptom {
     COLD,
