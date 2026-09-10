@@ -18,7 +18,6 @@ public class ClinicTest {
         algo2 = mock(WaitingList.class);
     }
 
-
     @Test
     public void whenClinic_InstanciatedWithTwoValidAlgorithm_ShouldCreateClinic () {
         Clinic uneClinique = new Clinic(algo1, algo2);
