@@ -1,5 +1,6 @@
 package org.example.dom;
 
+import org.example.dom.queues.FifoQueue;
 import org.example.enums.VisibleSymptom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

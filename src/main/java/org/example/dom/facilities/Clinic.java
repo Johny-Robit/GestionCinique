@@ -1,9 +1,11 @@
-package org.example.dom;
+package org.example.dom.facilities;
 
+import org.example.dom.Patient;
+import org.example.dom.queues.ClinicQueue;
 import org.example.enums.TriageType;
 import org.example.enums.VisibleSymptom;
 
-public class Clinic extends HealthcareFacility{
+public class Clinic extends HealthcareFacility {
     private ClinicQueue doctorQueue;
     private ClinicQueue radiologyQueue;
 

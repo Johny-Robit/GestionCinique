@@ -1,8 +1,10 @@
-package org.example.dom;
+package org.example.dom.facilities;
 
 import org.example.dom.Patient;
+import org.example.dom.queues.ClinicQueue;
+import org.example.dom.queues.FifoQueue;
+import org.example.dom.queues.GravityQueue;
 import org.example.enums.TriageType;
-import org.example.enums.VisibleSymptom;
 
 public abstract class HealthcareFacility {
     protected ClinicQueue clinicQueue;

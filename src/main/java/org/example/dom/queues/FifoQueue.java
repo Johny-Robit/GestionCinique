@@ -1,6 +1,6 @@
-package org.example.dom;
+package org.example.dom.queues;
 
-import org.example.enums.VisibleSymptom;
+import org.example.dom.Patient;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

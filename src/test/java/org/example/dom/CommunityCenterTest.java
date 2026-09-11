@@ -1,13 +1,12 @@
 package org.example.dom;
 
+import org.example.dom.facilities.CommunityCenter;
 import org.example.enums.TriageType;
 import org.example.enums.VisibleSymptom;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.*;
 
 class CommunityCenterTest {
 

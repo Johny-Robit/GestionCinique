@@ -1,5 +1,7 @@
 package org.example.dom;
 
+import org.example.dom.facilities.Clinic;
+import org.example.dom.queues.ClinicQueue;
 import org.example.enums.TriageType;
 import org.example.enums.VisibleSymptom;
 import org.junit.jupiter.api.BeforeEach;

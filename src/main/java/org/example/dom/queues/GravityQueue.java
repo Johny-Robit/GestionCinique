@@ -1,9 +1,10 @@
-package org.example.dom;
+package org.example.dom.queues;
+
+import org.example.dom.Patient;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
-public class GravityQueue implements ClinicQueue{
+public class GravityQueue implements ClinicQueue {
     private LinkedList<Patient> gravityQueue = new LinkedList<>();
 
     /**

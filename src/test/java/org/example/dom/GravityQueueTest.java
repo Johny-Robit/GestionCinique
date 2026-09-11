@@ -1,5 +1,6 @@
 package org.example.dom;
 
+import org.example.dom.queues.GravityQueue;
 import org.example.enums.VisibleSymptom;
 import org.junit.jupiter.api.Test;
 

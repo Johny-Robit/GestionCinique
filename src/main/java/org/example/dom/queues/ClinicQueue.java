@@ -1,4 +1,6 @@
-package org.example.dom;
+package org.example.dom.queues;
+
+import org.example.dom.Patient;
 
 public interface ClinicQueue {
 
