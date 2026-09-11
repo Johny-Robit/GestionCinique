@@ -8,5 +8,6 @@ public enum VisibleSymptom {
     CHEST_PAIN,
     MIGRAINE,
     SPRAIN,
-    CORONAVIRUS
+    CORONAVIRUS,
+    NULL
 }

@@ -39,7 +39,7 @@ public class ClinicTest {
     public void whenPatientArrives_thenPatientIsAddedToDoctorQueue () {
         Clinic clinic = new Clinic(DOCTOR_QUEUE, RADIOLOGY_QUEUE);
 
-        clinic.registerPatient(PATIENT_WITH_FLU_GRAVITY_2);
+        clinic.triagePatient(PATIENT_WITH_FLU_GRAVITY_2);
 
         verify(DOCTOR_QUEUE).addPatient(PATIENT_WITH_FLU_GRAVITY_2);
     }
@@ -48,7 +48,7 @@ public class ClinicTest {
     public void givenPatientWithBrokenBone_whenClinicRegisters_thenAddToRadiologyQueue(){
         Clinic clinic = new Clinic(DOCTOR_QUEUE, RADIOLOGY_QUEUE);
 
-        clinic.registerPatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_4);
+        clinic.triagePatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_4);
 
         verify(RADIOLOGY_QUEUE).addPatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_4);
     }
@@ -57,7 +57,7 @@ public class ClinicTest {
     public void givenPatientWithSprain_whenClinicRegisters_thenAddToRadiologyQueue(){
         Clinic clinic = new Clinic(DOCTOR_QUEUE, RADIOLOGY_QUEUE);
 
-        clinic.registerPatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
+        clinic.triagePatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
 
         verify(RADIOLOGY_QUEUE).addPatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
     }
@@ -66,7 +66,7 @@ public class ClinicTest {
     public void whenPatientArrivesWithSprain_thenIsQueuedToDoctor(){
         Clinic clinic = new Clinic(DOCTOR_QUEUE, RADIOLOGY_QUEUE);
 
-        clinic.registerPatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
+        clinic.triagePatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
 
         verify(DOCTOR_QUEUE).addPatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
     }
@@ -75,7 +75,7 @@ public class ClinicTest {
     public void givenPatientWithMigraine_whenRegister_thenIsQueuedToDoctor(){
         Clinic clinic = new Clinic(DOCTOR_QUEUE, RADIOLOGY_QUEUE);
 
-        clinic.registerPatient(PATIENT_WITH_MIGRAINE_GRAVITY_1);
+        clinic.triagePatient(PATIENT_WITH_MIGRAINE_GRAVITY_1);
 
         verify(DOCTOR_QUEUE).addPatient(PATIENT_WITH_MIGRAINE_GRAVITY_1);
     }
@@ -84,7 +84,7 @@ public class ClinicTest {
     public void givenPatientWithMigraine_whenRegister_thenIsNotQueuedToRadiology(){
         Clinic clinic = new Clinic(DOCTOR_QUEUE, RADIOLOGY_QUEUE);
 
-        clinic.registerPatient(PATIENT_WITH_MIGRAINE_GRAVITY_1);
+        clinic.triagePatient(PATIENT_WITH_MIGRAINE_GRAVITY_1);
 
         verify(RADIOLOGY_QUEUE, never()).addPatient(PATIENT_WITH_MIGRAINE_GRAVITY_1);
     }
@@ -92,8 +92,8 @@ public class ClinicTest {
     @Test
     public void givenFifoQueue_whenTwoPatients_thenSecondPatientIsSecondInQueue(){
         Clinic clinic = new Clinic(DOCTOR_TRIAGE_TYPE_FIFO, RADIOLOGY_TRIAGE_TYPE_FIFO);
-        clinic.registerPatient(PATIENT_WITH_FLU_GRAVITY_1);
-        clinic.registerPatient(PATIENT_WITH_FLU_GRAVITY_2);
+        clinic.triagePatient(PATIENT_WITH_FLU_GRAVITY_1);
+        clinic.triagePatient(PATIENT_WITH_FLU_GRAVITY_2);
 
         Patient firstPatient = clinic.nextDoctorPatient();
         Patient secondPatient = clinic.nextDoctorPatient();
@@ -106,8 +106,8 @@ public class ClinicTest {
     public void whenTwoPatientsWithFlue_thenAreNotQueuedToRadiology(){
         Clinic clinic = new Clinic(DOCTOR_QUEUE, RADIOLOGY_QUEUE);
 
-        clinic.registerPatient(PATIENT_WITH_FLU_GRAVITY_1);
-        clinic.registerPatient(PATIENT_WITH_FLU_GRAVITY_2);
+        clinic.triagePatient(PATIENT_WITH_FLU_GRAVITY_1);
+        clinic.triagePatient(PATIENT_WITH_FLU_GRAVITY_2);
 
         verify(RADIOLOGY_QUEUE, never()).addPatient(any());
     }
@@ -116,8 +116,8 @@ public class ClinicTest {
     public void givenHighPriorityPatient_whenRegisteringPatient_thenPatientAddedInFrontOfQueue(){
         Clinic clinic = new Clinic(DOCTOR_TRIAGE_TYPE_GRAVITY, RADIOLOGY_TRIAGE_TYPE_FIFO);
 
-        clinic.registerPatient(PATIENT_WITH_MIGRAINE_GRAVITY_1);
-        clinic.registerPatient(PATIENT_WITH_FLU_GRAVITY_7);
+        clinic.triagePatient(PATIENT_WITH_MIGRAINE_GRAVITY_1);
+        clinic.triagePatient(PATIENT_WITH_FLU_GRAVITY_7);
         Patient frontPatient = clinic.nextDoctorPatient();
 
         assertEquals(PATIENT_WITH_FLU_GRAVITY_7, frontPatient);
@@ -127,8 +127,8 @@ public class ClinicTest {
     public void whenGravityDoctorQueueWithOnePatientInRadiologyQueue_whenBrokenBonePatientIsAdded_thenPatientIsSecondInRadiologyQueue(){
         Clinic clinic = new Clinic(DOCTOR_TRIAGE_TYPE_GRAVITY, RADIOLOGY_TRIAGE_TYPE_FIFO);
 
-        clinic.registerPatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
-        clinic.registerPatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_7);
+        clinic.triagePatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
+        clinic.triagePatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_7);
         clinic.nextRadiologyPatient();
         Patient secondRadiologyPatient = clinic.nextRadiologyPatient();
 
@@ -139,8 +139,8 @@ public class ClinicTest {
     public void givenRadiologyQueueByGravity_whenAddingBrokenBonePatientWithHigherPriority_thenSortByGravity(){
         Clinic clinic = new Clinic(DOCTOR_TRIAGE_TYPE_GRAVITY, RADIOLOGY_TRIAGE_TYPE_GRAVITY);
 
-        clinic.registerPatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_4);
-        clinic.registerPatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_7);
+        clinic.triagePatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_4);
+        clinic.triagePatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_7);
         Patient firstPatient = clinic.nextRadiologyPatient();
 
         assertEquals(PATIENT_WITH_BROKEN_BONE_GRAVITY_7, firstPatient);

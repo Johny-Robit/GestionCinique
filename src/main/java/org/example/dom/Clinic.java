@@ -3,7 +3,7 @@ package org.example.dom;
 import org.example.enums.TriageType;
 import org.example.enums.VisibleSymptom;
 
-public class Clinic {
+public class Clinic extends HealthcareFacility{
     private ClinicQueue doctorQueue;
     private ClinicQueue radiologyQueue;
 
@@ -17,21 +17,15 @@ public class Clinic {
         this.radiologyQueue = radiologyQueue;
     }
 
-    public void registerPatient(Patient patient){
+    public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
+        triagePatient(new Patient(name, visibleSymptom, gravity));
+    }
+
+    public void triagePatient(Patient patient){
         doctorQueue.addPatient(patient);
         if (patient.visibleSymptom() == VisibleSymptom.BROKEN_BONE || patient.visibleSymptom() == VisibleSymptom.SPRAIN) {
             radiologyQueue.addPatient(patient);
         }
-    }
-
-    private ClinicQueue createQueue(TriageType type){
-        if (type == TriageType.FIFO) {
-            return new FifoQueue();
-        }
-        if (type == TriageType.GRAVITY) {
-            return new GravityQueue();
-        }
-        return null;
     }
 
     public Patient nextDoctorPatient(){
