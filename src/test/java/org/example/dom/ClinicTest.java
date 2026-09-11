@@ -14,6 +14,7 @@ public class ClinicTest {
     private TriageType DOCTOR_TRIAGE_TYPE_FIFO = TriageType.FIFO;
     private TriageType DOCTOR_TRIAGE_TYPE_GRAVITY = TriageType.GRAVITY;
     private TriageType RADIOLOGY_TRIAGE_TYPE_FIFO = TriageType.FIFO;
+    private TriageType RADIOLOGY_TRIAGE_TYPE_GRAVITY = TriageType.GRAVITY;
 
     private ClinicQueue DOCTOR_QUEUE;
     private ClinicQueue RADIOLOGY_QUEUE;
@@ -128,10 +129,21 @@ public class ClinicTest {
 
         clinic.registerPatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
         clinic.registerPatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_7);
-        Patient firstRadiologyPatient = clinic.nextRadiologyPatient();
+        clinic.nextRadiologyPatient();
         Patient secondRadiologyPatient = clinic.nextRadiologyPatient();
 
         assertEquals(PATIENT_WITH_BROKEN_BONE_GRAVITY_7, secondRadiologyPatient);
+    }
+
+    @Test
+    public void givenRadiologyQueueByGravity_whenAddingBrokenBonePatientWithHigherPriority_thenSortByGravity(){
+        Clinic clinic = new Clinic(DOCTOR_TRIAGE_TYPE_GRAVITY, RADIOLOGY_TRIAGE_TYPE_GRAVITY);
+
+        clinic.registerPatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_4);
+        clinic.registerPatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_7);
+        Patient firstPatient = clinic.nextRadiologyPatient();
+
+        assertEquals(PATIENT_WITH_BROKEN_BONE_GRAVITY_7, firstPatient);
     }
 
 }
