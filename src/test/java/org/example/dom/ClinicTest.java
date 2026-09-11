@@ -146,4 +146,26 @@ public class ClinicTest {
         assertEquals(PATIENT_WITH_BROKEN_BONE_GRAVITY_7, firstPatient);
     }
 
+    @Test
+    public void givenCoronavirusPatient_whenClinicTriage_thenDoctorQueueDoesNotReceivePatient() {
+        Clinic clinic = new Clinic(DOCTOR_QUEUE, RADIOLOGY_QUEUE);
+
+        Patient coronavirusPatient = new Patient("Patient Zero", VisibleSymptom.CORONAVIRUS, 10);
+
+        clinic.triagePatient(coronavirusPatient);
+
+        verify(DOCTOR_QUEUE, never()).addPatient(any());
+    }
+
+    @Test
+    public void givenCoronavirusPatient_whenClinicTriage_thenRadiologyQueueDoesNotReceivePatient() {
+        Clinic clinic = new Clinic(DOCTOR_QUEUE, RADIOLOGY_QUEUE);
+
+        Patient coronavirusPatient = new Patient("Patient Zero", VisibleSymptom.CORONAVIRUS, 10);
+
+        clinic.triagePatient(coronavirusPatient);
+
+        verify(RADIOLOGY_QUEUE, never()).addPatient(any());
+    }
+
 }

@@ -4,7 +4,7 @@ import org.example.enums.TriageType;
 import org.example.enums.VisibleSymptom;
 
 public class CommunityCenter extends HealthcareFacility{
-    private ClinicQueue nurseQueue;
+    private final ClinicQueue nurseQueue;
 
     public CommunityCenter(TriageType type) {
         this.nurseQueue = createQueue(type);
@@ -15,6 +15,10 @@ public class CommunityCenter extends HealthcareFacility{
     }
 
     public void triagePatient(Patient patient) {
+        if (patient.visibleSymptom() == VisibleSymptom.CORONAVIRUS) {
+            return; // rejet
+        }
+
         nurseQueue.addPatient(patient);
     }
 

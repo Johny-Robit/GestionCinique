@@ -22,7 +22,12 @@ public class Clinic extends HealthcareFacility{
     }
 
     public void triagePatient(Patient patient){
+        if (patient.visibleSymptom() == VisibleSymptom.CORONAVIRUS) {
+            return; // rejet
+        }
+
         doctorQueue.addPatient(patient);
+
         if (patient.visibleSymptom() == VisibleSymptom.BROKEN_BONE || patient.visibleSymptom() == VisibleSymptom.SPRAIN) {
             radiologyQueue.addPatient(patient);
         }
