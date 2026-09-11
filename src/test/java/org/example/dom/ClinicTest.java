@@ -1,6 +1,5 @@
-import org.example.dom.Clinic;
-import org.example.dom.ClinicQueue;
-import org.example.dom.Patient;
+package org.example.dom;
+
 import org.example.enums.TriageType;
 import org.example.enums.VisibleSymptom;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,15 +11,19 @@ import static org.mockito.Mockito.*;
 
 public class ClinicTest {
 
-    private TriageType FIFO_TRIAGE_TYPE = TriageType.FIFO;
+    private TriageType DOCTOR_TRIAGE_TYPE_FIFO = TriageType.FIFO;
+    private TriageType DOCTOR_TRIAGE_TYPE_GRAVITY = TriageType.GRAVITY;
+    private TriageType RADIOLOGY_TRIAGE_TYPE_FIFO = TriageType.FIFO;
 
     private ClinicQueue DOCTOR_QUEUE;
     private ClinicQueue RADIOLOGY_QUEUE;
 
-    private Patient PATIENT_WITH_FLU_GRAVITY_1 = new Patient("Jane Doe", VisibleSymptom.FLU, 2);
+    private Patient PATIENT_WITH_FLU_GRAVITY_1 = new Patient("Jane Doe", VisibleSymptom.FLU, 1);
     private Patient PATIENT_WITH_FLU_GRAVITY_2 = new Patient("John Doe", VisibleSymptom.FLU, 2);
+    private Patient PATIENT_WITH_FLU_GRAVITY_7 = new Patient("Wu Han", VisibleSymptom.FLU, 7);
     private Patient PATIENT_WITH_MIGRAINE_GRAVITY_1 = new Patient("Jack OfBlades", VisibleSymptom.MIGRAINE, 1);
     private Patient PATIENT_WITH_BROKEN_BONE_GRAVITY_4 = new Patient("Bruce Wayne", VisibleSymptom.BROKEN_BONE, 4);
+    private Patient PATIENT_WITH_BROKEN_BONE_GRAVITY_7 = new Patient("Bruce Lee", VisibleSymptom.BROKEN_BONE, 7);
     private Patient PATIENT_WITH_SPRAIN_GRAVITY_3 = new Patient("Cat Woman", VisibleSymptom.SPRAIN, 3);
 
 
@@ -87,7 +90,7 @@ public class ClinicTest {
 
     @Test
     public void givenFifoQueue_whenTwoPatients_thenSecondPatientIsSecondInQueue(){
-        Clinic clinic = new Clinic(FIFO_TRIAGE_TYPE, FIFO_TRIAGE_TYPE);
+        Clinic clinic = new Clinic(DOCTOR_TRIAGE_TYPE_FIFO, RADIOLOGY_TRIAGE_TYPE_FIFO);
         clinic.registerPatient(PATIENT_WITH_FLU_GRAVITY_1);
         clinic.registerPatient(PATIENT_WITH_FLU_GRAVITY_2);
 
@@ -108,7 +111,27 @@ public class ClinicTest {
         verify(RADIOLOGY_QUEUE, never()).addPatient(any());
     }
 
+    @Test
+    public void givenHighPriorityPatient_whenRegisteringPatient_thenPatientAddedInFrontOfQueue(){
+        Clinic clinic = new Clinic(DOCTOR_TRIAGE_TYPE_GRAVITY, RADIOLOGY_TRIAGE_TYPE_FIFO);
 
+        clinic.registerPatient(PATIENT_WITH_MIGRAINE_GRAVITY_1);
+        clinic.registerPatient(PATIENT_WITH_FLU_GRAVITY_7);
+        Patient frontPatient = clinic.nextDoctorPatient();
 
+        assertEquals(PATIENT_WITH_FLU_GRAVITY_7, frontPatient);
+    }
+
+    @Test
+    public void whenGravityDoctorQueueWithOnePatientInRadiologyQueue_whenBrokenBonePatientIsAdded_thenPatientIsSecondInRadiologyQueue(){
+        Clinic clinic = new Clinic(DOCTOR_TRIAGE_TYPE_GRAVITY, RADIOLOGY_TRIAGE_TYPE_FIFO);
+
+        clinic.registerPatient(PATIENT_WITH_SPRAIN_GRAVITY_3);
+        clinic.registerPatient(PATIENT_WITH_BROKEN_BONE_GRAVITY_7);
+        Patient firstRadiologyPatient = clinic.nextRadiologyPatient();
+        Patient secondRadiologyPatient = clinic.nextRadiologyPatient();
+
+        assertEquals(PATIENT_WITH_BROKEN_BONE_GRAVITY_7, secondRadiologyPatient);
+    }
 
 }

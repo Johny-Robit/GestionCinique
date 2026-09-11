@@ -28,11 +28,17 @@ public class Clinic {
         if (type == TriageType.FIFO) {
             return new FifoQueue();
         }
-        // plus tard : return new GravityQueue();
+        if (type == TriageType.GRAVITY) {
+            return new GravityQueue();
+        }
         return null;
     }
 
     public Patient nextDoctorPatient(){
         return doctorQueue.nextPatient();
+    }
+
+    public Patient nextRadiologyPatient(){
+        return radiologyQueue.nextPatient();
     }
 }
