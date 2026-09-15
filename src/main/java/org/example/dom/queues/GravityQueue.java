@@ -2,10 +2,12 @@ package org.example.dom.queues;
 
 import org.example.dom.Patient;
 
-import java.util.LinkedList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class GravityQueue implements ClinicQueue {
-    private LinkedList<Patient> gravityQueue = new LinkedList<>();
+
+    private PriorityQueue<Patient> gravityQueue = new PriorityQueue<>(Comparator.comparingInt(Patient::gravity).reversed());
 
     /**
      * Inserts a patient while preserving gravity order.
@@ -13,18 +15,7 @@ public class GravityQueue implements ClinicQueue {
     @Override
     public void addPatient(Patient newPatient) {
 
-        // Scan for the first patient with lower gravity
-        for (int i = 0; i < gravityQueue.size(); i++) {
-            Patient patientInList = gravityQueue.get(i);
-
-            if (patientInList.gravity() < newPatient.gravity()) {
-                gravityQueue.add(i, newPatient); // Insert at position
-                return;
-            }
-        }
-
-        // No lower gravity found -> append at the end
-        gravityQueue.addLast(newPatient);
+        gravityQueue.add(newPatient);
     }
 
     @Override
@@ -32,3 +23,4 @@ public class GravityQueue implements ClinicQueue {
         return gravityQueue.poll();
     }
 }
+

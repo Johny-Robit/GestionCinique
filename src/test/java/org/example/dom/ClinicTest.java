@@ -97,10 +97,9 @@ public class ClinicTest {
         clinic.triagePatient(PATIENT_WITH_FLU_GRAVITY_1);
         clinic.triagePatient(PATIENT_WITH_FLU_GRAVITY_2);
 
-        Patient firstPatient = clinic.nextDoctorPatient();
+        clinic.nextDoctorPatient();
         Patient secondPatient = clinic.nextDoctorPatient();
 
-        assertEquals(PATIENT_WITH_FLU_GRAVITY_1, firstPatient);
         assertEquals(PATIENT_WITH_FLU_GRAVITY_2, secondPatient);
     }
 

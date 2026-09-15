@@ -6,6 +6,8 @@ import org.example.enums.TriageType;
 import org.example.enums.VisibleSymptom;
 
 public class Clinic extends HealthcareFacility {
+    // Comportement attendu de clinic :
+    // décider si un patient doit aller voir le docteur ou le docteur et la radiologie
     private ClinicQueue doctorQueue;
     private ClinicQueue radiologyQueue;
 
@@ -19,19 +21,14 @@ public class Clinic extends HealthcareFacility {
         this.radiologyQueue = radiologyQueue;
     }
 
-    public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
-        triagePatient(new Patient(name, visibleSymptom, gravity));
-    }
-
     public void triagePatient(Patient patient){
-        if (patient.visibleSymptom() == VisibleSymptom.CORONAVIRUS) {
-            return; // rejet
-        }
-
-        doctorQueue.addPatient(patient);
-
-        if (patient.visibleSymptom() == VisibleSymptom.BROKEN_BONE || patient.visibleSymptom() == VisibleSymptom.SPRAIN) {
-            radiologyQueue.addPatient(patient);
+        switch (patient.visibleSymptom()) {
+            case CORONAVIRUS:
+                return;
+            case BROKEN_BONE, SPRAIN:
+                radiologyQueue.addPatient(patient);
+            default:
+                doctorQueue.addPatient(patient);
         }
     }
 

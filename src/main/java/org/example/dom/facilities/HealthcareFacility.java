@@ -6,6 +6,7 @@ import org.example.dom.queues.FifoQueue;
 import org.example.dom.queues.GravityQueue;
 import org.example.enums.TriageType;
 
+// LA CLASSE ABSTRAITE QUI CONTIENT CLINIC ET COMMUNITYCENTER
 public abstract class HealthcareFacility {
     protected ClinicQueue clinicQueue;
 
